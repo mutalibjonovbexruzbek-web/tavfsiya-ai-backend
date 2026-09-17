@@ -3,7 +3,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from groq import Groq
 
-app = Flask(name)
+app = Flask(__name__)
 
 # GitHub Pages saytingizdan keladigan so'rovlarga ruxsat
 CORS(
