@@ -1,0 +1,746 @@
+[17-sen, 2026 19:30] Mirahmatov: <!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Tavsiya AI — Sizni tinglaydi</title>
+
+    <meta
+        name="description"
+        content="Tavsiya AI — muammolaringizni tinglaydi, tahlil qiladi va amaliy tavsiyalar beradi."
+    >
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #060914;
+            --panel: rgba(16, 23, 42, 0.72);
+            --panel2: rgba(20, 29, 52, 0.82);
+            --border: rgba(255,255,255,0.09);
+            --text: #f5f7ff;
+            --muted: #9ba6c0;
+            --accent: #7c5cff;
+            --accent2: #19d3ff;
+            --danger: #ff5c7a;
+            --user: linear-gradient(135deg, #6d4aff, #9c68ff);
+            --ai: rgba(255,255,255,0.055);
+        }
+
+        body {
+            min-height: 100vh;
+            font-family:
+                Inter,
+                system-ui,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+
+            color: var(--text);
+            background:
+                radial-gradient(circle at 10% 10%, rgba(124,92,255,.20), transparent 30%),
+                radial-gradient(circle at 90% 20%, rgba(25,211,255,.12), transparent 28%),
+                radial-gradient(circle at 50% 100%, rgba(124,92,255,.10), transparent 35%),
+                var(--bg);
+
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+
+            background:
+                linear-gradient(
+                    120deg,
+                    transparent 0%,
+                    rgba(255,255,255,.025) 50%,
+                    transparent 100%
+                );
+
+            animation: shine 8s linear infinite;
+        }
+
+        @keyframes shine {
+            from {
+                transform: translateX(-100%);
+            }
+
+            to {
+                transform: translateX(100%);
+            }
+        }
+
+        .container {
+            width: min(1180px, calc(100% - 32px));
+            margin: auto;
+        }
+
+        /* HEADER */
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+
+            background: rgba(6, 9, 20, .68);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav {
+            height: 76px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: -.5px;
+        }
+
+        .logo-icon {
+            width: 42px;
+            height: 42px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 14px;
+
+            background:
+                linear-gradient(135deg, #7655ff, #18d7ff);
+
+            box-shadow:
+                0 10px 35px rgba(124,92,255,.35);
+        }
+
+        .logo-icon span {
+            font-size: 21px;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+
+            padding: 8px 13px;
+
+            border: 1px solid var(--border);
+            border-radius: 999px;
+
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+
+            border-radius: 50%;
+            background: #35e58a;
+
+            box-shadow: 0 0 14px #35e58a;
+        }
+
+        .clear-btn {
+            border: 1px solid var(--border);
+            background: rgba(255,255,255,.04);
+            color: var(--muted);
+[17-sen, 2026 19:30] Mirahmatov: padding: 9px 13px;
+            border-radius: 10px;
+
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        .clear-btn:hover {
+            color: white;
+            background: rgba(255,255,255,.08);
+        }
+
+        /* HERO */
+
+        .hero {
+            text-align: center;
+            padding: 82px 0 55px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+
+            padding: 8px 14px;
+
+            border: 1px solid rgba(124,92,255,.25);
+            background: rgba(124,92,255,.09);
+
+            border-radius: 999px;
+
+            color: #c8bdff;
+            font-size: 13px;
+            font-weight: 600;
+
+            margin-bottom: 24px;
+        }
+
+        .hero h1 {
+            font-size: clamp(42px, 7vw, 78px);
+            line-height: .98;
+            letter-spacing: -4px;
+
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .gradient-text {
+            background:
+                linear-gradient(
+                    90deg,
+                    #ffffff,
+                    #a994ff,
+                    #53dcff,
+                    #ffffff
+                );
+
+            background-size: 300% auto;
+
+            -webkit-background-clip: text;
+            background-clip: text;
+
+            color: transparent;
+
+            animation: gradientMove 6s linear infinite;
+        }
+
+        @keyframes gradientMove {
+            to {
+                background-position: 300% center;
+            }
+        }
+
+        .hero p {
+            max-width: 650px;
+            margin: 25px auto 0;
+
+            color: var(--muted);
+            font-size: 17px;
+            line-height: 1.7;
+        }
+
+        /* FEATURES */
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+
+            margin-bottom: 45px;
+        }
+
+        .feature {
+            padding: 22px;
+
+            border: 1px solid var(--border);
+            background: var(--panel);
+
+            border-radius: 20px;
+
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+
+            transition: .25s;
+        }
+
+        .feature:hover {
+            transform: translateY(-4px);
+            border-color: rgba(124,92,255,.3);
+
+            box-shadow:
+                0 20px 50px rgba(0,0,0,.2);
+        }
+
+        .feature-icon {
+            width: 42px;
+            height: 42px;
+
+            display: grid;
+            place-items: center;
+
+            background: rgba(124,92,255,.12);
+            border-radius: 12px;
+
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+
+        .feature h3 {
+            font-size: 15px;
+            margin-bottom: 7px;
+        }
+
+        .feature p {
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        /* CHAT */
+
+        .chat-wrapper {
+            max-width: 900px;
+            margin: 0 auto 70px;
+        }
+
+        .chat-card {
+            border: 1px solid var(--border);
+            background: rgba(9,14,28,.76);
+
+            border-radius: 28px;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 30px 100px rgba(0,0,0,.32);
+
+            backdrop-filter: blur(22px);
+            -webkit-backdrop-filter: blur(22px);
+        }
+
+        .chat-top {
+            padding: 18px 22px;
+
+            display: flex;
+            align-items: center;
+            gap: 13px;
+
+            border-bottom: 1px solid var(--border);
+        }
+
+        .ai-avatar {
+            width: 44px;
+            height: 44px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 14px;
+
+            background:
+                linear-gradient(135deg, #7655ff, #19d3ff);
+
+            box-shadow:
+                0 10px 30px rgba(124,92,255,.25);
+        }
+
+        .chat-title {
+            font-weight: 750;
+        }
+[17-sen, 2026 19:30] Mirahmatov: .chat-subtitle {
+            color: var(--muted);
+            font-size: 12px;
+            margin-top: 3px;
+        }
+
+        .chat-messages {
+            height: 520px;
+            overflow-y: auto;
+
+            padding: 25px;
+
+            scroll-behavior: smooth;
+        }
+
+        .chat-messages::-webkit-scrollbar {
+            width: 7px;
+        }
+
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,.12);
+            border-radius: 20px;
+        }
+
+        .message {
+            display: flex;
+            margin-bottom: 18px;
+
+            animation: messageIn .25s ease;
+        }
+
+        @keyframes messageIn {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message.user {
+            justify-content: flex-end;
+        }
+
+        .bubble {
+            max-width: 78%;
+
+            padding: 14px 17px;
+
+            border-radius: 18px;
+
+            line-height: 1.65;
+            font-size: 15px;
+
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .message.ai .bubble {
+            background: var(--ai);
+            border: 1px solid rgba(255,255,255,.06);
+
+            border-bottom-left-radius: 5px;
+        }
+
+        .message.user .bubble {
+            background: var(--user);
+
+            border-bottom-right-radius: 5px;
+
+            box-shadow:
+                0 10px 30px rgba(109,74,255,.18);
+        }
+
+        /* TYPING */
+
+        .typing {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .typing span {
+            width: 7px;
+            height: 7px;
+
+            border-radius: 50%;
+            background: #aaa;
+
+            animation: typing 1.2s infinite;
+        }
+
+        .typing span:nth-child(2) {
+            animation-delay: .15s;
+        }
+
+        .typing span:nth-child(3) {
+            animation-delay: .3s;
+        }
+
+        @keyframes typing {
+            0%, 60%, 100% {
+                transform: translateY(0);
+                opacity: .35;
+            }
+
+            30% {
+                transform: translateY(-5px);
+                opacity: 1;
+            }
+        }
+
+        /* QUICK BUTTONS */
+
+        .quick {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+
+            padding: 0 25px 18px;
+        }
+
+        .quick button {
+            border: 1px solid var(--border);
+            background: rgba(255,255,255,.035);
+
+            color: #cbd2e5;
+
+            padding: 9px 13px;
+
+            border-radius: 999px;
+
+            cursor: pointer;
+            font-size: 12px;
+
+            transition: .2s;
+        }
+
+        .quick button:hover {
+            background: rgba(124,92,255,.12);
+            border-color: rgba(124,92,255,.3);
+            color: white;
+        }
+
+        /* INPUT */
+
+        .input-area {
+            padding: 18px;
+
+            border-top: 1px solid var(--border);
+
+            display: flex;
+            gap: 10px;
+        }
+
+        .input-box {
+            flex: 1;
+
+            display: flex;
+            align-items: center;
+
+            background: rgba(255,255,255,.045);
+            border: 1px solid var(--border);
+
+            border-radius: 17px;
+
+            padding: 5px 7px 5px 15px;
+
+            transition: .2s;
+        }
+
+        .input-box:focus-within {
+            border-color: rgba(124,92,255,.5);
+
+            box-shadow:
+                0 0 0 4px rgba(124,92,255,.07);
+        }
+
+        #messageInput {
+            flex: 1;
+
+            min-width: 0;
+
+            border: none;
+            outline: none;
+
+            background: transparent;
+            color: white;
+
+            font-size: 15px;
+
+            padding: 12px 5px;
+        }
+
+        #messageInput::placeholder {
+            color: #69738d;
+        }
+
+        #sendBtn {
+            width: 48px;
+            height: 48px;
+[17-sen, 2026 19:30] Mirahmatov: border: none;
+            border-radius: 14px;
+
+            background:
+                linear-gradient(135deg, #7655ff, #19cfff);
+
+            color: white;
+
+            font-size: 20px;
+
+            cursor: pointer;
+
+            transition: .2s;
+
+            box-shadow:
+                0 8px 25px rgba(124,92,255,.25);
+        }
+
+        #sendBtn:hover {
+            transform: translateY(-2px);
+            box-shadow:
+                0 12px 30px rgba(124,92,255,.35);
+        }
+
+        #sendBtn:disabled {
+            opacity: .5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .input-note {
+            text-align: center;
+
+            color: #626c84;
+            font-size: 11px;
+
+            padding: 0 18px 15px;
+        }
+
+        /* FOOTER */
+
+        footer {
+            border-top: 1px solid var(--border);
+
+            padding: 28px 0 35px;
+
+            text-align: center;
+
+            color: #69738d;
+            font-size: 13px;
+        }
+
+        footer strong {
+            color: #b5bde0;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 850px) {
+            .features {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .hero {
+                padding-top: 55px;
+            }
+
+            .hero h1 {
+                letter-spacing: -2px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                width: min(100% - 20px, 1180px);
+            }
+
+            .nav {
+                height: 66px;
+            }
+
+            .logo {
+                font-size: 17px;
+            }
+
+            .logo-icon {
+                width: 37px;
+                height: 37px;
+            }
+
+            .status {
+                display: none;
+            }
+
+            .clear-btn {
+                font-size: 12px;
+                padding: 8px 10px;
+            }
+
+            .hero {
+                padding: 48px 5px 38px;
+            }
+
+            .hero h1 {
+                font-size: 43px;
+                line-height: 1.02;
+            }
+
+            .hero p {
+                font-size: 14px;
+            }
+
+            .features {
+                grid-template-columns: 1fr 1fr;
+                gap: 9px;
+            }
+
+            .feature {
+                padding: 16px;
+                border-radius: 16px;
+            }
+
+            .feature h3 {
+                font-size: 13px;
+            }
+
+            .feature p {
+                font-size: 11px;
+            }
+
+            .chat-card {
+                border-radius: 20px;
+            }
+
+            .chat-messages {
+                height: 480px;
+                padding: 17px;
+            }
+
+            .bubble {
+                max-width: 88%;
+                font-size: 14px;
+            }
+
+            .quick {
+                padding: 0 17px 15px;
+            }
+
+            .quick button {
+                font-size: 11px;
+            }
+
+            .input-area {
+                padding: 12px;
+            }
+
+            #sendBtn {
+                width: 45px;
+                height: 45px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="container nav">
+
+        <div class="logo">
+            <div class="logo-icon">
+                <span>🤖</span>
+            </div>
+
+            <span>Tavsiya AI</span>
+        </div>
+
+        <div class="nav-right">
+
+            <div class="status
